@@ -49,7 +49,7 @@ return null;
           if(board[i][j]==null){
             
         board[i][j] = 'O';
-            let score=minimax(board, 0, false);
+            let score=minimax(board, 0,-Infinity, Infinity, false);
             
             board[i][j]=null;
          
@@ -71,7 +71,7 @@ let scores={
   O:1,
   tie:0
 }
-const minimax = (board, depth, isMaximizing) => {
+const minimax = (board, depth, alpha, beta, isMaximizing) => {
   
   const result = checkWinner(board);
   // Base cases
@@ -86,10 +86,13 @@ const minimax = (board, depth, isMaximizing) => {
       for (let j = 0; j < 3; j++) {
         if (board[i][j] === null) {
           board[i][j] = 'O';
-          const score = minimax(board, depth + 1, false);
+          const score = minimax(board, depth + 1,alpha, beta, false);
           board[i][j] = null;
-
           bestScore = Math.max(score, bestScore);
+          alpha=Math.max(alpha, bestScore);
+          if(beta<=alpha){
+            break;
+          }
         }
       }
     }
@@ -100,10 +103,13 @@ const minimax = (board, depth, isMaximizing) => {
       for (let j = 0; j < 3; j++) {
         if (board[i][j] === null) {
           board[i][j] = 'X';
-          const score = minimax(board, depth + 1, true);
+          const score = minimax(board, depth + 1, alpha, beta, true);
           board[i][j] = null;
-
           bestScore = Math.min(score, bestScore);
+          beta=Math.min(beta, bestScore);
+          if(beta<=alpha){
+            break;
+          }
         }
       }
     }
