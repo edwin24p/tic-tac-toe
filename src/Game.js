@@ -52,7 +52,7 @@ return null;
             let score=minimax(board, 0,-Infinity, Infinity, false);
             
             board[i][j]=null;
-         
+         console.log(score);
             if(score > bestScore){
               bestScore=score;
               move=[i, j];
@@ -67,8 +67,8 @@ return null;
       
     }
 let scores={
-  X:-1,
-  O:1,
+  X:-10,
+  O:10,
   tie:0
 }
 const minimax = (board, depth, alpha, beta, isMaximizing) => {
@@ -77,7 +77,7 @@ const minimax = (board, depth, alpha, beta, isMaximizing) => {
   // Base cases
   if (result!==null) {
     
-    return scores[result];
+    return scores[result]-depth;
   }
 
   if (isMaximizing) {
